@@ -44,3 +44,9 @@ function animate() {
     stats.update();
 	renderer.render( scene, camera );
 }
+
+addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, innerHeight); 
+});
