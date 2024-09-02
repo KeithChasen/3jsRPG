@@ -9,6 +9,10 @@ import {
     WebGLRenderer 
 } from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import Stats from 'three/addons/libs/stats.module.js';
+
+const stats = new Stats();
+document.body.appendChild( stats.dom );
 
 const renderer = new WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -37,6 +41,6 @@ controls.update();
 
 function animate() {
     controls.update();
-
+    stats.update();
 	renderer.render( scene, camera );
 }
