@@ -10,6 +10,9 @@ import {
 } from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Stats from 'three/addons/libs/stats.module.js';
+import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+
+const gui = new GUI();
 
 const stats = new Stats();
 document.body.appendChild( stats.dom );
@@ -50,3 +53,7 @@ addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, innerHeight); 
 });
+
+const folder = gui.addFolder('Cube');
+folder.add(cube.position, 'x', -2, 2, 0.1).name('X Position');
+folder.addColor(cube.material, 'color');
