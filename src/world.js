@@ -4,10 +4,13 @@ import {
     Mesh,
     MeshStandardMaterial, 
     PlaneGeometry, 
-    SphereGeometry 
+    SphereGeometry, 
+    Vector2
 } from 'three';
 
 export class World extends Mesh {
+    #objectMap = new Map();
+
     constructor(width, height) {
         super();
 
@@ -65,12 +68,20 @@ export class World extends Mesh {
 
         for (let i = 0; i < this.treeCount; i++) {
             const treeMesh = new Mesh(treeGeometry, treeMaterial);
+            const coords = new Vector2(
+                Math.floor(this.width * Math.random()),
+                Math.floor(this.height * Math.random()),
+            )
+            if(this.#objectMap.has(`${coords.x}-${coords.y}`)) {
+                continue;
+            }
             treeMesh.position.set(
-                Math.floor(this.width * Math.random()) + .5,
+                coords.x + .5,
                 treeHeight / 2,
-                Math.floor(this.height * Math.random()) + .5,
+                coords.y + .5,
             );
             this.trees.add(treeMesh);
+            this.#objectMap.set(`${coords.x}-${coords.y}`, treeMesh);
         }
     }
 
@@ -93,13 +104,22 @@ export class World extends Mesh {
             const height = minRockHeight + (Math.random() * (maxRockHeight - minRockHeight));
             const rockGeometry = new SphereGeometry(radius, 6, 5);
             const rockMesh = new Mesh(rockGeometry, rockMaterial);
+
+            const coords = new Vector2(
+                Math.floor(this.width * Math.random()),
+                Math.floor(this.height * Math.random()),
+            )
+            if(this.#objectMap.has(`${coords.x}-${coords.y}`)) {
+                continue;
+            }
             rockMesh.position.set(
-                Math.floor(this.width * Math.random()) + .5,
+                coords.x + .5,
                 0,
-                Math.floor(this.height * Math.random()) + .5,
+                coords.y + .5,
             );
             rockMesh.scale.y = height
             this.rocks.add(rockMesh);
+            this.#objectMap.set(`${coords.x}-${coords.y}`, rockMesh);
         }
     }
 
@@ -119,12 +139,20 @@ export class World extends Mesh {
             const radius = minBushRadius + (Math.random() * (maxBushRadius - minBushRadius));
             const bushGeometry = new SphereGeometry(radius, 8, 8);
             const bushMesh = new Mesh(bushGeometry, bushMaterial);
+            const coords = new Vector2(
+                Math.floor(this.width * Math.random()),
+                Math.floor(this.height * Math.random()),
+            )
+            if(this.#objectMap.has(`${coords.x}-${coords.y}`)) {
+                continue;
+            }
             bushMesh.position.set(
-                Math.floor(this.width * Math.random()) + .5,
+                coords.x + .5,
                 radius,
-                Math.floor(this.height * Math.random()) + .5,
+                coords.y + .5,
             );
             this.bushes.add(bushMesh);
+            this.#objectMap.set(`${coords.x}-${coords.y}`, bushMesh);
         }
     }
 }
