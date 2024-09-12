@@ -55,6 +55,10 @@ const worldFolder = gui.addFolder('World');
 worldFolder.addColor(world.terrain.material, 'color');
 worldFolder.add(world, 'width', 1, 20, 1).name('Width');
 worldFolder.add(world, 'height', 1, 20, 1).name('Height');
+worldFolder.add(world, 'generate').name('Generate')
+worldFolder.add(world, 'treeCount', 1, 100, 1).name('Trees');
+worldFolder.add(world, 'rockCount', 1, 100, 1).name('Rocks');
+worldFolder.add(world, 'bushCount', 1, 100, 1).name('Bushes');
 worldFolder.onChange(() => {
     world.createTerrain();
 })

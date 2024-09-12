@@ -21,21 +21,61 @@ export class World extends Mesh {
         this.rockCount = 20;
         this.bushCount = 10;
 
+        this.trees = new Group();
+        this.add(this.trees);
+
+        this.rocks = new Group();
+        this.add(this.rocks);
+
+        this.bushes = new Group();
+        this.add(this.bushes);
+
+       this.generate();
+    }
+
+    generate() {
+        this.clear();
         this.createTerrain();
-
         this.createTrees();
-
         this.createRocks();
-
         this.createBushes();
     }
 
-    createTerrain() {
+    clear() {
         if (this.terrain) {
             this.terrain.geometry.dispose();
             this.terrain.material.dispose();
             this.remove(this.terrain);
         }
+
+        if (this.trees) {
+            this.trees.children.forEach(tree => {
+                tree.geometry?.dispose();
+                tree.material?.dispose();
+            });
+            this.trees.clear();
+        }
+
+        if (this.rocks) {
+            this.rocks.children.forEach(rock => {
+                rock.geometry?.dispose();
+                rock.material?.dispose();
+            });
+            this.rocks.clear();
+        }
+
+        if (this.bushes) {
+            this.bushes.children.forEach(bush => {
+                bush.geometry?.dispose();
+                bush.material?.dispose();
+            });
+            this.bushes.clear();
+        }
+
+        this.#objectMap.clear();
+    }
+
+    createTerrain() {
         const terrainMaterial = new MeshStandardMaterial({ 
             color: 0x50a000,
             // wireframe: true 
@@ -62,9 +102,6 @@ export class World extends Mesh {
             color: 0x305010,
             flatShading: true
         });
-
-        this.trees = new Group();
-        this.add(this.trees);
 
         for (let i = 0; i < this.treeCount; i++) {
             const treeMesh = new Mesh(treeGeometry, treeMaterial);
@@ -95,9 +132,6 @@ export class World extends Mesh {
             color: 0xb0b0b0,
             flatShading: true
         });
-
-        this.rocks = new Group();
-        this.add(this.rocks);
 
         for (let i = 0; i < this.rockCount; i++) {
             const radius = minRockRadius + (Math.random() * (maxRockRadius - minRockRadius));
@@ -131,9 +165,6 @@ export class World extends Mesh {
             color: 0x80a040,
             flatShading: true
         });
-
-        this.bushes = new Group();
-        this.add(this.bushes);
 
         for (let i = 0; i < this.bushCount; i++) {
             const radius = minBushRadius + (Math.random() * (maxBushRadius - minBushRadius));
