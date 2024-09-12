@@ -16,12 +16,15 @@ export class Terrain extends Mesh {
 
         this.treeCount = 10;
         this.rockCount = 20;
+        this.bushCount = 10;
 
         this.createTerrain();
 
         this.createTrees();
 
         this.createRocks();
+
+        this.createBushes();
     }
 
     createTerrain() {
@@ -97,6 +100,31 @@ export class Terrain extends Mesh {
             );
             rockMesh.scale.y = height
             this.rocks.add(rockMesh);
+        }
+    }
+
+    createBushes() {
+        const minBushRadius = .1;
+        const maxBushRadius = .3;
+
+        const bushMaterial = new MeshStandardMaterial({ 
+            color: 0x80a040,
+            flatShading: true
+        });
+
+        this.bushes = new Group();
+        this.add(this.bushes);
+
+        for (let i = 0; i < this.bushCount; i++) {
+            const radius = minBushRadius + (Math.random() * (maxBushRadius - minBushRadius));
+            const bushGeometry = new SphereGeometry(radius, 8, 8);
+            const bushMesh = new Mesh(bushGeometry, bushMaterial);
+            bushMesh.position.set(
+                Math.floor(this.width * Math.random()) + .5,
+                radius,
+                Math.floor(this.height * Math.random()) + .5,
+            );
+            this.bushes.add(bushMesh);
         }
     }
 }
