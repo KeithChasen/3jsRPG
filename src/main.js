@@ -1,9 +1,6 @@
 import {
     AmbientLight,
-    BoxGeometry, 
-    DirectionalLight, 
-    Mesh, 
-    MeshStandardMaterial, 
+    DirectionalLight,  
     PerspectiveCamera, 
     Scene, 
     WebGLRenderer 
@@ -11,7 +8,7 @@ import {
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Stats from 'three/addons/libs/stats.module.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-import { Terrain } from './terrain';
+import { World } from './world';
 
 const gui = new GUI();
 
@@ -27,8 +24,8 @@ const scene = new Scene();
 const camera = new PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 const controls = new OrbitControls( camera, renderer.domElement );
 
-const terrain = new Terrain(10, 10);
-scene.add(terrain);
+const world = new World(10, 10);
+scene.add(world);
 
 const sun = new DirectionalLight();
 sun.intensity = 3;
@@ -54,10 +51,10 @@ addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, innerHeight); 
 });
 
-const folder = gui.addFolder('Terrain');
-folder.addColor(terrain.terrain.material, 'color');
-folder.add(terrain, 'width', 1, 20, 1).name('Width');
-folder.add(terrain, 'height', 1, 20, 1).name('Height');
-folder.onChange(() => {
-    terrain.createTerrain();
+const worldFolder = gui.addFolder('World');
+worldFolder.addColor(world.terrain.material, 'color');
+worldFolder.add(world, 'width', 1, 20, 1).name('Width');
+worldFolder.add(world, 'height', 1, 20, 1).name('Height');
+worldFolder.onChange(() => {
+    world.createTerrain();
 })

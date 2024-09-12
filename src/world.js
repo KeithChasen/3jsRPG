@@ -7,7 +7,7 @@ import {
     SphereGeometry 
 } from 'three';
 
-export class Terrain extends Mesh {
+export class World extends Mesh {
     constructor(width, height) {
         super();
 
