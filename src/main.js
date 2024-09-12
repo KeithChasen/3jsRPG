@@ -31,6 +31,7 @@ const terrain = new Terrain(10, 10);
 scene.add(terrain);
 
 const sun = new DirectionalLight();
+sun.intensity = 3;
 sun.position.set(1,1,1);
 scene.add(sun);
 
@@ -38,7 +39,7 @@ const ambient = new AmbientLight();
 ambient.intensity = 1;
 scene.add(ambient);
 
-camera.position.z = 5;
+camera.position.set(10, 2, 10);
 controls.update();
 
 function animate() {
@@ -54,9 +55,9 @@ addEventListener('resize', () => {
 });
 
 const folder = gui.addFolder('Terrain');
-folder.addColor(terrain.material, 'color');
+folder.addColor(terrain.terrain.material, 'color');
 folder.add(terrain, 'width', 1, 20, 1).name('Width');
 folder.add(terrain, 'height', 1, 20, 1).name('Height');
 folder.onChange(() => {
-    terrain.createGeometry();
+    terrain.createTerrain();
 })
